@@ -1,0 +1,29 @@
+{
+  "name": "@company/unified-pos-intelligence",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Unified SDK hybrid iframe solution for POS companies",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:sdk & npm run dev:iframe",
+    "dev:sdk": "npm run dev --workspace=@company/pos-intelligence-sdk",
+    "dev:iframe": "npm run dev --workspace=@company/pos-intelligence-iframe",
+    "build": "npm run build:sdk && npm run build:iframe",
+    "build:sdk": "npm run build --workspace=@company/pos-intelligence-sdk",
+    "build:iframe": "npm run build --workspace=@company/pos-intelligence-iframe",
+    "test": "npm run test --workspaces",
+    "test:watch": "npm run test:watch --workspaces",
+    "lint": "npm run lint --workspaces",
+    "typecheck": "npm run typecheck --workspaces"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
