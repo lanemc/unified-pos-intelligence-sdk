@@ -27,14 +27,19 @@ Experience the full integration with our interactive POS demo:
 # Install dependencies
 npm install
 
-# Start all development servers
+# Start all development servers (automatically finds available ports)
 npm run dev
+
+# Or kill any existing processes and start fresh
+npm run kill-ports && npm run dev
 ```
 
-This starts:
-- **Demo POS App**: http://localhost:3000 - Interactive POS interface
-- **Iframe App**: http://localhost:3001 - Unified Intelligence interface
+The startup script automatically finds available ports and starts:
+- **Demo POS App**: Interactive POS interface
+- **Iframe App**: Unified Intelligence interface  
 - **SDK**: Builds in watch mode
+
+🎯 **The demo will show you the exact URLs once started!**
 
 ### Demo Features
 
@@ -71,16 +76,36 @@ This starts:
 
 ## 🛠 Development
 
-### Individual Packages
+### Flexible Port System
+
+The development environment automatically finds available ports starting from 3000. No more port conflicts!
+
+**Available Scripts:**
 ```bash
-# SDK only
+# Smart startup (finds available ports automatically)
+npm run dev
+
+# Kill any processes on common ports 
+npm run kill-ports
+
+# Find available ports manually
+npm run find-ports
+
+# Individual packages (using environment variables)
 npm run dev:sdk
-
-# Iframe only  
-npm run dev:iframe
-
-# Demo only
+npm run dev:iframe  
 npm run dev:demo
+
+# Legacy parallel startup (may have port conflicts)
+npm run dev:old
+```
+
+**Environment Variables:**
+```bash
+DEMO_PORT=3000          # Demo POS app port
+IFRAME_PORT=3001        # Iframe app port  
+SDK_PORT=5173          # SDK build server port
+NEXT_PUBLIC_IFRAME_URL # Automatically set by startup script
 ```
 
 ### Building

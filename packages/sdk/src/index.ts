@@ -18,7 +18,25 @@ export class UnifiedPOSIntelligence {
   private config?: UnifiedConfig;
   private iframe?: HTMLIFrameElement;
   private container?: HTMLElement;
-  private iframeUrl = process.env.NEXT_PUBLIC_IFRAME_URL || 'http://localhost:3001';
+  private iframeUrl = this.getIframeUrl();
+
+  private getIframeUrl(): string {
+    // Try different ways to get the iframe URL
+    if (typeof window !== 'undefined') {
+      // Check if it's set globally (from demo environment)
+      if ((window as any).NEXT_PUBLIC_IFRAME_URL) {
+        return (window as any).NEXT_PUBLIC_IFRAME_URL;
+      }
+    }
+    
+    // Check process.env (for Node.js environments)
+    if (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_IFRAME_URL) {
+      return process.env.NEXT_PUBLIC_IFRAME_URL;
+    }
+    
+    // Fallback to default
+    return 'http://localhost:3001';
+  }
 
   async init(config: UnifiedConfig): Promise<void> {
     // Validate container exists

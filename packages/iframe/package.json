@@ -4,9 +4,9 @@
   "private": true,
   "description": "Unified POS Intelligence Iframe App",
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p ${IFRAME_PORT:-3001}",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p ${IFRAME_PORT:-3001}",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:e2e": "playwright test",

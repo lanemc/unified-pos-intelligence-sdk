@@ -4,9 +4,9 @@
   "private": true,
   "description": "POS Demo Environment showcasing Unified Intelligence SDK",
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "next dev -p ${DEMO_PORT:-3000}",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p ${DEMO_PORT:-3000}",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },

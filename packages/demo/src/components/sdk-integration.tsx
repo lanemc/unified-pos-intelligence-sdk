@@ -37,6 +37,9 @@ export function SDKIntegration() {
 
   useEffect(() => {
     if (sdkEnabled && !isInitialized && containerRef.current) {
+      // Set iframe URL globally for SDK to pick up
+      (window as any).NEXT_PUBLIC_IFRAME_URL = process.env.NEXT_PUBLIC_IFRAME_URL;
+      
       const sdk = new UnifiedPOSIntelligence();
       sdkRef.current = sdk;
 
@@ -54,7 +57,7 @@ export function SDKIntegration() {
       })
         .then(() => {
           setIsInitialized(true);
-          console.log('SDK initialized successfully');
+          console.log('SDK initialized successfully with iframe URL:', process.env.NEXT_PUBLIC_IFRAME_URL);
         })
         .catch((error) => {
           console.error('Failed to initialize SDK:', error);

@@ -7,7 +7,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev:sdk & npm run dev:iframe & npm run dev:demo",
+    "dev": "node scripts/start-dev.js",
+    "dev:old": "npm run dev:sdk & npm run dev:iframe & npm run dev:demo",
     "dev:sdk": "npm run dev --workspace=@company/pos-intelligence-sdk",
     "dev:iframe": "npm run dev --workspace=@company/pos-intelligence-iframe",
     "dev:demo": "npm run dev --workspace=@company/pos-demo",
@@ -18,7 +19,9 @@
     "test": "npm run test --workspaces",
     "test:watch": "npm run test:watch --workspaces",
     "lint": "npm run lint --workspaces",
-    "typecheck": "npm run typecheck --workspaces"
+    "typecheck": "npm run typecheck --workspaces",
+    "find-ports": "node scripts/find-ports.js",
+    "kill-ports": "lsof -ti:3000,3001,5173 | xargs kill -9 2>/dev/null || true"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
