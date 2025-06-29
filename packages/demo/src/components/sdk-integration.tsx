@@ -29,6 +29,13 @@ class UnifiedPOSIntelligence {
 
     this.container = container;
 
+    // Clean up any existing iframe first
+    const existingIframe = container.querySelector('iframe');
+    if (existingIframe) {
+      existingIframe.remove();
+      console.log('Removed existing iframe');
+    }
+
     // Create and configure iframe
     this.iframe = document.createElement('iframe');
     this.iframe.src = `${this.iframeUrl}/unified-intelligence`;
@@ -107,18 +114,15 @@ export function SDKIntegration() {
   const sdkRef = useRef<UnifiedPOSIntelligence | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Expose SDK instance to parent component via window
+  // Single useEffect to handle SDK initialization and cleanup
   useEffect(() => {
-    if (sdkRef.current && isInitialized) {
-      (window as any).unifiedSDK = sdkRef.current;
-    }
-    return () => {
-      delete (window as any).unifiedSDK;
-    };
-  }, [isInitialized]);
+    if (sdkEnabled && containerRef.current) {
+      // Clean up any existing iframe first
+      const existingIframe = containerRef.current.querySelector('iframe');
+      if (existingIframe) {
+        existingIframe.remove();
+      }
 
-  useEffect(() => {
-    if (sdkEnabled && !isInitialized && containerRef.current) {
       // Set iframe URL globally for SDK to pick up
       (window as any).NEXT_PUBLIC_IFRAME_URL = process.env.NEXT_PUBLIC_IFRAME_URL;
       
@@ -129,6 +133,8 @@ export function SDKIntegration() {
       sdk.setOnInitialized(() => {
         setIsInitialized(true);
         console.log('SDK iframe loaded successfully');
+        // Expose SDK instance globally
+        (window as any).unifiedSDK = sdk;
       });
 
       sdk.init({
@@ -149,24 +155,8 @@ export function SDKIntegration() {
         .catch((error) => {
           console.error('Failed to initialize SDK:', error);
         });
-    }
-
-    return () => {
-      if (sdkRef.current && isInitialized && containerRef.current) {
-        // Clean up iframe when component unmounts or SDK is disabled
-        const iframe = containerRef.current.querySelector('iframe');
-        if (iframe) {
-          iframe.remove();
-        }
-        setIsInitialized(false);
-      }
-    };
-  }, [sdkEnabled, isInitialized]);
-
-  // Handle SDK disable
-  useEffect(() => {
-    if (!sdkEnabled && containerRef.current) {
-      // Remove iframe when SDK is disabled
+    } else if (!sdkEnabled && containerRef.current) {
+      // Clean up when disabled
       const iframe = containerRef.current.querySelector('iframe');
       if (iframe) {
         iframe.remove();
@@ -175,7 +165,20 @@ export function SDKIntegration() {
       sdkRef.current = null;
       delete (window as any).unifiedSDK;
     }
-  }, [sdkEnabled]);
+
+    return () => {
+      // Cleanup on component unmount
+      if (containerRef.current) {
+        const iframe = containerRef.current.querySelector('iframe');
+        if (iframe) {
+          iframe.remove();
+        }
+      }
+      setIsInitialized(false);
+      sdkRef.current = null;
+      delete (window as any).unifiedSDK;
+    };
+  }, [sdkEnabled]); // Only depend on sdkEnabled
 
   const integrationCode = `// 1. Install the SDK
 npm install @company/unified-pos-intelligence

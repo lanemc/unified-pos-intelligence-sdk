@@ -17,10 +17,15 @@ export class CommunicationManager {
   private handlers: Map<string, (message: Message) => void> = new Map();
 
   constructor() {
-    this.setupMessageListener();
+    // Only set up message listener on client side
+    if (typeof window !== 'undefined') {
+      this.setupMessageListener();
+    }
   }
 
   private setupMessageListener() {
+    if (typeof window === 'undefined') return;
+    
     window.addEventListener('message', (event: MessageEvent) => {
       // Validate message structure
       if (!event.data || typeof event.data !== 'object') return;
@@ -80,6 +85,8 @@ export class CommunicationManager {
   }
 
   public sendMessage(message: Omit<Message, 'timestamp' | 'id' | 'sequence'>) {
+    if (typeof window === 'undefined') return;
+    
     const fullMessage: Message = {
       ...message,
       timestamp: Date.now(),
@@ -109,5 +116,5 @@ export class CommunicationManager {
   }
 }
 
-// Create singleton instance
-export const communication = new CommunicationManager();
+// Create singleton instance only on client side
+export const communication = typeof window !== 'undefined' ? new CommunicationManager() : null as any;

@@ -46,6 +46,8 @@ export default function UnifiedIntelligencePage() {
   ]);
 
   useEffect(() => {
+    if (!communication) return; // Guard against SSR
+    
     // Get features from handshake
     const receivedFeatures = communication.getFeatures();
     if (Object.keys(receivedFeatures).length > 0) {
@@ -81,7 +83,9 @@ export default function UnifiedIntelligencePage() {
     });
 
     return () => {
-      communication.off('TRIGGER_SCENARIO');
+      if (communication) {
+        communication.off('TRIGGER_SCENARIO');
+      }
     };
   }, []);
 
