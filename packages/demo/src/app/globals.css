@@ -81,6 +81,7 @@
 
   .intelligence-iframe-container {
     @apply relative mx-5 my-5 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 p-5 shadow-lg;
+    isolation: isolate; /* Create new stacking context */
   }
 
   .intelligence-iframe-container::before {

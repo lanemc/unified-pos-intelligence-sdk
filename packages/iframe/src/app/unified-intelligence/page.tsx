@@ -99,7 +99,7 @@ export default function UnifiedIntelligencePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="h-full bg-gray-50 p-4 overflow-y-auto">
       <div className="mx-auto max-w-6xl">
         <header className="mb-6">
           <div className="flex items-center justify-between">
@@ -115,7 +115,7 @@ export default function UnifiedIntelligencePage() {
           </div>
         </header>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 relative">
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="dashboard">
               <Activity className="mr-2 h-4 w-4" />
@@ -152,7 +152,7 @@ export default function UnifiedIntelligencePage() {
             )}
           </TabsList>
 
-          <TabsContent value="dashboard" className="space-y-4">
+          <TabsContent value="dashboard" className="space-y-4 relative z-0">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

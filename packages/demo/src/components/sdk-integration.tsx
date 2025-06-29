@@ -37,6 +37,7 @@ class UnifiedPOSIntelligence {
     this.iframe.style.height = '100%';
     this.iframe.style.border = 'none';
     this.iframe.style.borderRadius = '8px';
+    this.iframe.style.overflow = 'hidden';
 
     // Add iframe to container
     container.appendChild(this.iframe);

@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export default function DashboardPage() {
-  const { currentMerchant, orders, triggerScenario } = useDemoStore();
+  const { currentMerchant, orders, triggerScenario, sdkEnabled } = useDemoStore();
   const { metrics } = currentMerchant;
 
   const kpiCards = [
@@ -137,8 +137,9 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            {/* KPI Cards */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {/* KPI Cards - Only show when SDK is disabled */}
+            {!sdkEnabled && (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {kpiCards.map((kpi) => (
                 <Card key={kpi.title}>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -163,9 +164,11 @@ export default function DashboardPage() {
                   </CardContent>
                 </Card>
               ))}
-            </div>
+              </div>
+            )}
 
-            {/* Recent Orders */}
+            {/* Recent Orders - Only show when SDK is disabled */}
+            {!sdkEnabled && (
             <Card>
               <CardHeader>
                 <CardTitle>Recent Orders</CardTitle>
