@@ -7,12 +7,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev:sdk & npm run dev:iframe",
+    "dev": "npm run dev:sdk & npm run dev:iframe & npm run dev:demo",
     "dev:sdk": "npm run dev --workspace=@company/pos-intelligence-sdk",
     "dev:iframe": "npm run dev --workspace=@company/pos-intelligence-iframe",
-    "build": "npm run build:sdk && npm run build:iframe",
+    "dev:demo": "npm run dev --workspace=@company/pos-demo",
+    "build": "npm run build:sdk && npm run build:iframe && npm run build:demo",
     "build:sdk": "npm run build --workspace=@company/pos-intelligence-sdk",
     "build:iframe": "npm run build --workspace=@company/pos-intelligence-iframe",
+    "build:demo": "npm run build --workspace=@company/pos-demo",
     "test": "npm run test --workspaces",
     "test:watch": "npm run test:watch --workspaces",
     "lint": "npm run lint --workspaces",

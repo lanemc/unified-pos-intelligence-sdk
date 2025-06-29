@@ -18,7 +18,7 @@ export class UnifiedPOSIntelligence {
   private config?: UnifiedConfig;
   private iframe?: HTMLIFrameElement;
   private container?: HTMLElement;
-  private iframeUrl = 'http://localhost:3001'; // Will be configurable later
+  private iframeUrl = process.env.NEXT_PUBLIC_IFRAME_URL || 'http://localhost:3001';
 
   async init(config: UnifiedConfig): Promise<void> {
     // Validate container exists
@@ -84,5 +84,18 @@ export class UnifiedPOSIntelligence {
         // Handle other message types
         break;
     }
+  }
+
+  // Public method to trigger demo scenarios
+  public triggerScenario(scenario: string): void {
+    if (!this.iframe?.contentWindow) return;
+
+    const message = {
+      type: 'TRIGGER_SCENARIO',
+      payload: { scenario },
+      timestamp: Date.now()
+    };
+
+    this.iframe.contentWindow.postMessage(message, this.iframeUrl);
   }
 }
