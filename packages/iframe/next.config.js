@@ -9,7 +9,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value: [
-              "frame-ancestors 'self' https://*.pos-domain.com http://localhost:*",
+              "frame-ancestors 'self' https://*.pos-domain.com http://localhost:* https://localhost:*",
               "default-src 'self'",
               "connect-src 'self' https://api.unified-intelligence.com wss://realtime.unified-intelligence.com",
               "img-src 'self' https: data:",
@@ -17,10 +17,6 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
             ].join('; ')
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
           },
           {
             key: 'X-Content-Type-Options',
