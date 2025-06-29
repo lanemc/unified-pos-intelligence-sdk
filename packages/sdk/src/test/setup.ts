@@ -1,4 +1,5 @@
-import '@testing-library/jest-dom/vitest';
+import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
 // Mock window.postMessage for iframe communication tests
 global.postMessage = vi.fn();
